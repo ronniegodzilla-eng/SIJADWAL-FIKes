@@ -6,8 +6,10 @@ import { Catalog, mkById } from "@/lib/catalog";
 import { DAYS, MENIT_PER_SKS } from "@/lib/config";
 import { m2t, m2hhmm, hhmm2m } from "@/lib/time";
 import { validate } from "@/lib/validation";
-import { chipStyle, segStyle } from "@/lib/ui";
+import { segStyle } from "@/lib/ui";
 import { HoverBox } from "./primitives";
+import { Combobox } from "./Combobox";
+import { DosenPicker } from "./DosenPicker";
 
 interface Props {
   catalog: Catalog;
@@ -44,15 +46,6 @@ export default function FormJadwal(p: Props) {
 
   const upd = (patch: Partial<FormDraft>) => {
     setForm((f) => ({ ...f, ...patch }));
-    setOverrideChecked(false);
-  };
-  const toggleDosen = (id: string) => {
-    setForm((f) => ({
-      ...f,
-      dosenIds: f.dosenIds.includes(id)
-        ? f.dosenIds.filter((x) => x !== id)
-        : [...f.dosenIds, id],
-    }));
     setOverrideChecked(false);
   };
 
@@ -164,35 +157,23 @@ export default function FormJadwal(p: Props) {
           >
             <div>
               <label style={labelStyle}>Mata kuliah</label>
-              <select
+              <Combobox
                 value={form.mataKuliahId}
-                onChange={(e) => upd({ mataKuliahId: e.target.value, kelasId: "" })}
-                style={selStyle}
-              >
-                <option value="">— pilih mata kuliah —</option>
-                {mkOptions.map((m) => (
-                  <option key={m.value} value={m.value}>
-                    {m.label}
-                  </option>
-                ))}
-              </select>
+                options={mkOptions}
+                onChange={(v) => upd({ mataKuliahId: v, kelasId: "" })}
+                placeholder="— pilih mata kuliah —"
+              />
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               <div>
                 <label style={labelStyle}>Kelas / rombel</label>
-                <select
+                <Combobox
                   value={form.kelasId}
-                  onChange={(e) => upd({ kelasId: e.target.value })}
-                  style={selStyle}
-                >
-                  <option value="">— pilih kelas —</option>
-                  {kelasOptions.map((k) => (
-                    <option key={k.value} value={k.value}>
-                      {k.label}
-                    </option>
-                  ))}
-                </select>
+                  options={kelasOptions}
+                  onChange={(v) => upd({ kelasId: v })}
+                  placeholder="— pilih kelas —"
+                />
               </div>
               <div>
                 <label style={labelStyle}>Hari</label>
@@ -214,19 +195,14 @@ export default function FormJadwal(p: Props) {
               <label style={labelStyle}>
                 Dosen{" "}
                 <span style={{ color: "#9AA69E", fontWeight: 500 }}>
-                  (multi-select untuk team teaching)
+                  (klik “+ Tambah dosen” untuk team teaching)
                 </span>
               </label>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                {p.catalog.dosen.map((d) => {
-                  const on = form.dosenIds.includes(d.id);
-                  return (
-                    <div key={d.id} onClick={() => toggleDosen(d.id)} style={chipStyle(on)}>
-                      {d.nama.split(",")[0]}
-                    </div>
-                  );
-                })}
-              </div>
+              <DosenPicker
+                dosen={p.catalog.dosen}
+                selectedIds={form.dosenIds}
+                onChange={(ids) => upd({ dosenIds: ids })}
+              />
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -247,18 +223,15 @@ export default function FormJadwal(p: Props) {
               {form.mode === "offline" ? (
                 <div>
                   <label style={labelStyle}>Ruangan</label>
-                  <select
+                  <Combobox
                     value={form.ruanganId}
-                    onChange={(e) => upd({ ruanganId: e.target.value })}
-                    style={selStyle}
-                  >
-                    <option value="">— pilih ruangan —</option>
-                    {p.catalog.ruangan.map((r) => (
-                      <option key={r.id} value={r.id}>
-                        {r.kode} — {r.gedung}
-                      </option>
-                    ))}
-                  </select>
+                    options={p.catalog.ruangan.map((r) => ({
+                      value: r.id,
+                      label: `${r.kode} — ${r.gedung}`,
+                    }))}
+                    onChange={(v) => upd({ ruanganId: v })}
+                    placeholder="— pilih ruangan —"
+                  />
                 </div>
               ) : (
                 <div style={{ display: "flex", alignItems: "flex-end", paddingBottom: 4 }}>

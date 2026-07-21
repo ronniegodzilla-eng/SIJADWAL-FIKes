@@ -19,7 +19,8 @@ import {
 } from "@/lib/config";
 import { m2t } from "@/lib/time";
 import { HoverBox } from "./primitives";
-import { card, greenBtn, selectStyle } from "@/lib/ui";
+import { Combobox } from "./Combobox";
+import { card, greenBtn } from "@/lib/ui";
 
 type ViewMode = "prodi" | "dosen" | "ruangan" | "kelas";
 
@@ -122,17 +123,13 @@ export default function GridMingguan(p: Props) {
           <span style={{ fontSize: 12.5, color: "#6B776F", fontWeight: 600 }}>
             {flabels[viewMode]}
           </span>
-          <select
+          <Combobox
             value={filterValue}
-            onChange={(e) => p.onSetFilter(e.target.value)}
-            style={{ ...selectStyle, minWidth: 200 }}
-          >
-            {fopts.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
+            options={fopts}
+            onChange={(v) => p.onSetFilter(v)}
+            style={{ minWidth: 240 }}
+            placeholder={`— pilih ${flabels[viewMode].toLowerCase()} —`}
+          />
         </div>
         <div style={{ flex: 1 }} />
         <div

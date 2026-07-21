@@ -5,8 +5,9 @@ import type { Jadwal, FormDraft } from "@/lib/types";
 import { Catalog, mkById } from "@/lib/catalog";
 import { MENIT_PER_SKS } from "@/lib/config";
 import { cariSlot, type SlotResult } from "@/lib/slot";
-import { chipStyle } from "@/lib/ui";
 import { HoverBox } from "./primitives";
+import { Combobox } from "./Combobox";
+import { DosenPicker } from "./DosenPicker";
 
 interface Props {
   catalog: Catalog;
@@ -20,16 +21,6 @@ const labelStyle: CSSProperties = {
   fontWeight: 700,
   color: "#3A463F",
   marginBottom: 7,
-};
-const selStyle: CSSProperties = {
-  width: "100%",
-  padding: "10px 12px",
-  border: "1px solid #DDE4DF",
-  borderRadius: 9,
-  fontSize: 13,
-  background: "#fff",
-  cursor: "pointer",
-  marginBottom: 16,
 };
 const cardStyle: CSSProperties = {
   background: "#fff",
@@ -62,59 +53,45 @@ export default function CariSlot({ catalog, jadwal, onUseSlot }: Props) {
         </div>
 
         <label style={labelStyle}>Mata kuliah</label>
-        <select
-          value={mataKuliahId}
-          onChange={(e) => {
-            setMk(e.target.value);
-            setKelas("");
-            setResult(null);
-          }}
-          style={selStyle}
-        >
-          <option value="">— pilih mata kuliah —</option>
-          {catalog.mk.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.kode} · {m.nama} ({m.sks} SKS)
-            </option>
-          ))}
-        </select>
+        <div style={{ marginBottom: 16 }}>
+          <Combobox
+            value={mataKuliahId}
+            options={catalog.mk.map((m) => ({
+              value: m.id,
+              label: `${m.kode} · ${m.nama} (${m.sks} SKS)`,
+            }))}
+            onChange={(v) => {
+              setMk(v);
+              setKelas("");
+              setResult(null);
+            }}
+            placeholder="— pilih mata kuliah —"
+          />
+        </div>
 
         <label style={labelStyle}>Kelas / rombel</label>
-        <select
-          value={kelasId}
-          onChange={(e) => {
-            setKelas(e.target.value);
-            setResult(null);
-          }}
-          style={selStyle}
-        >
-          <option value="">— pilih kelas —</option>
-          {kelasOptions.map((k) => (
-            <option key={k.id} value={k.id}>
-              {k.nama}
-            </option>
-          ))}
-        </select>
+        <div style={{ marginBottom: 16 }}>
+          <Combobox
+            value={kelasId}
+            options={kelasOptions.map((k) => ({ value: k.id, label: k.nama }))}
+            onChange={(v) => {
+              setKelas(v);
+              setResult(null);
+            }}
+            placeholder="— pilih kelas —"
+          />
+        </div>
 
         <label style={labelStyle}>Dosen (bisa lebih dari satu)</label>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
-          {catalog.dosen.map((d) => {
-            const on = dosenIds.includes(d.id);
-            return (
-              <div
-                key={d.id}
-                onClick={() => {
-                  setDosenIds((ids) =>
-                    on ? ids.filter((x) => x !== d.id) : [...ids, d.id]
-                  );
-                  setResult(null);
-                }}
-                style={chipStyle(on)}
-              >
-                {d.nama.split(",")[0]}
-              </div>
-            );
-          })}
+        <div style={{ marginBottom: 16 }}>
+          <DosenPicker
+            dosen={catalog.dosen}
+            selectedIds={dosenIds}
+            onChange={(ids) => {
+              setDosenIds(ids);
+              setResult(null);
+            }}
+          />
         </div>
 
         <label style={labelStyle}>Durasi</label>
