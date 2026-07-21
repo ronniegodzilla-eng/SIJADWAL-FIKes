@@ -1,0 +1,39 @@
+rules_version = '2';
+
+// Firestore Security Rules — SIJADWAL FIKes (PRD §6).
+// Otorisasi via custom claims (admin, prodiId). Validasi bentrok di client (F4).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.admin == true;
+    }
+    // Petugas hanya boleh menulis jadwal untuk prodi pada klaimnya.
+    function isPetugasProdi(pid) {
+      return isSignedIn() && !isAdmin() && request.auth.token.prodiId == pid;
+    }
+
+    // Baca terbuka lintas prodi untuk pengguna login (PRD §2).
+    match /{document=**} {
+      allow read: if isSignedIn();
+    }
+
+    // Master data, periode, users: tulis hanya admin (umumnya lewat Admin SDK).
+    match /prodi/{id}      { allow write: if isAdmin(); }
+    match /dosen/{id}      { allow write: if isAdmin(); }
+    match /ruangan/{id}    { allow write: if isAdmin(); }
+    match /mataKuliah/{id} { allow write: if isAdmin(); }
+    match /kelas/{id}      { allow write: if isAdmin(); }
+    match /periode/{id}    { allow write: if isAdmin(); }
+    match /users/{id}      { allow write: if isAdmin(); }
+
+    // Jadwal: admin bebas; petugas hanya prodinya (cek prodiId terdenormalisasi).
+    match /jadwal/{id} {
+      allow create: if isAdmin() || isPetugasProdi(request.resource.data.prodiId);
+      allow update, delete: if isAdmin() || isPetugasProdi(resource.data.prodiId);
+    }
+  }
+}
