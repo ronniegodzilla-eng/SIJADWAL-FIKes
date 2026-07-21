@@ -71,6 +71,7 @@ export function normKelasList(docs: Doc[]): Kelas[] {
       nama: str(d.nama ?? d.namaRombel),
       prodiId: str(d.prodiId),
       sem: num(d.sem ?? d.semesterKe),
+      angkatan: num(d.angkatan) || undefined,
       aktif: bool(d.aktif),
     }))
     .sort((a, b) => a.nama.localeCompare(b.nama));

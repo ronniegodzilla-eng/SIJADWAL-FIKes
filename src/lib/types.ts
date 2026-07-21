@@ -48,6 +48,7 @@ export interface Kelas {
   prodiId: string;
   /** Semester berjalan */
   sem: number;
+  angkatan?: number;
   aktif?: boolean;
 }
 

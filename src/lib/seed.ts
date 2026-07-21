@@ -49,12 +49,12 @@ export const seedMataKuliah: MataKuliah[] = [
 ];
 
 export const seedKelas: Kelas[] = [
-  { id: "kls-k3-24a", nama: "K3-2024-A", prodiId: "k3", sem: 4, aktif: true },
-  { id: "kls-k3-23a", nama: "K3-2023-A", prodiId: "k3", sem: 6, aktif: true },
-  { id: "kls-k3-22a", nama: "K3-2022-A", prodiId: "k3", sem: 8, aktif: true },
-  { id: "kls-kl-24a", nama: "KESLING-2024-A", prodiId: "kesling", sem: 4, aktif: true },
-  { id: "kls-kl-23a", nama: "KESLING-2023-A", prodiId: "kesling", sem: 6, aktif: true },
-  { id: "kls-km-25a", nama: "KESMAS-2025-A", prodiId: "kesmas", sem: 2, aktif: true },
+  { id: "kls-k3-24a", nama: "K3-2024-A", prodiId: "k3", sem: 4, angkatan: 2024, aktif: true },
+  { id: "kls-k3-23a", nama: "K3-2023-A", prodiId: "k3", sem: 6, angkatan: 2023, aktif: true },
+  { id: "kls-k3-22a", nama: "K3-2022-A", prodiId: "k3", sem: 8, angkatan: 2022, aktif: true },
+  { id: "kls-kl-24a", nama: "KESLING-2024-A", prodiId: "kesling", sem: 4, angkatan: 2024, aktif: true },
+  { id: "kls-kl-23a", nama: "KESLING-2023-A", prodiId: "kesling", sem: 6, angkatan: 2023, aktif: true },
+  { id: "kls-km-25a", nama: "KESMAS-2025-A", prodiId: "kesmas", sem: 2, angkatan: 2025, aktif: true },
 ];
 
 export const seedPeriode: Periode[] = [
