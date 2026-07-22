@@ -51,7 +51,6 @@ export default function Login({
             "linear-gradient(155deg, #12703A 0%, #0F5D2C 55%, #0B4A24 100%)",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
           padding: "48px 56px",
           color: "#EAF4EC",
         }}
@@ -62,7 +61,7 @@ export default function Login({
             UNIVERSITAS IBNU SINA
           </div>
         </div>
-        <div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
           <div
             style={{
               display: "inline-flex",
@@ -77,6 +76,7 @@ export default function Login({
               fontWeight: 700,
               letterSpacing: ".04em",
               marginBottom: 22,
+              alignSelf: "flex-start",
             }}
           >
             SISTEM PENJADWALAN KULIAH
@@ -92,22 +92,6 @@ export default function Login({
           >
             SIJADWAL<span style={{ color: "#F6C915" }}>·</span>FIKes
           </h1>
-        </div>
-        <div style={{ display: "flex", gap: 26, fontSize: 12.5, color: "#9EC1A8" }}>
-          <div>
-            <div style={{ fontSize: 21, fontWeight: 800, color: "#F6C915" }}>3</div>
-            Program Studi
-          </div>
-          <div>
-            <div style={{ fontSize: 21, fontWeight: 800, color: "#F6C915" }}>0</div>
-            Toleransi Bentrok
-          </div>
-          <div>
-            <div style={{ fontSize: 21, fontWeight: 800, color: "#F6C915" }}>
-              &lt;100ms
-            </div>
-            Validasi
-          </div>
         </div>
       </div>
 
