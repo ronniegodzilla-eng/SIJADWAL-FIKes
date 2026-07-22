@@ -17,6 +17,7 @@ import MasterData from "./MasterData";
 import Ekspor from "./Ekspor";
 import UsersPeriode from "./UsersPeriode";
 import { Footer } from "./Footer";
+import ChangePasswordModal from "./ChangePasswordModal";
 
 type Screen = "grid" | "slot" | "rekap" | "master" | "ekspor" | "users";
 type ViewMode = "prodi" | "dosen" | "ruangan" | "kelas";
@@ -51,6 +52,7 @@ export default function App() {
   const [formOpen, setFormOpen] = useState(false);
   const [formInitial, setFormInitial] = useState<FormDraft | null>(null);
   const [editId, setEditId] = useState<string | null>(null);
+  const [showChangePw, setShowChangePw] = useState(false);
 
   if (!authState.ready && authState.firebaseEnabled) {
     return (
@@ -290,6 +292,18 @@ export default function App() {
                 {roleLabel}
               </div>
             </div>
+            {firebaseMode && (
+              <HoverBox
+                onClick={() => setShowChangePw(true)}
+                title="Ganti Password"
+                style={{ cursor: "pointer", color: "#8FBB9C", display: "flex" }}
+                hoverStyle={{ color: "#fff" }}
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+                </svg>
+              </HoverBox>
+            )}
             <HoverBox
               onClick={doLogout}
               title="Keluar"
@@ -483,6 +497,13 @@ export default function App() {
             setFormOpen(false);
             setSelectedId(null);
           }}
+        />
+      )}
+
+      {showChangePw && (
+        <ChangePasswordModal
+          changePassword={authState.changePassword}
+          onClose={() => setShowChangePw(false)}
         />
       )}
     </div>

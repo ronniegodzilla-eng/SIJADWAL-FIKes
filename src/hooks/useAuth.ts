@@ -71,6 +71,26 @@ export function useAuth() {
     return null;
   }, []);
 
+  /**
+   * Ganti password akun sendiri. Memerlukan password saat ini (verifikasi
+   * ulang / reauthenticate) — ini yang membuatnya aman tanpa hak admin.
+   */
+  const changePassword = useCallback(
+    async (currentPassword: string, newPassword: string): Promise<void> => {
+      if (!firebaseEnabled || !auth?.currentUser) {
+        throw new Error("Tidak ada sesi masuk yang aktif.");
+      }
+      const email = auth.currentUser.email;
+      if (!email) throw new Error("Akun ini tidak memiliki email.");
+      const { EmailAuthProvider, reauthenticateWithCredential, updatePassword } =
+        await import("firebase/auth");
+      const cred = EmailAuthProvider.credential(email, currentPassword);
+      await reauthenticateWithCredential(auth.currentUser, cred);
+      await updatePassword(auth.currentUser, newPassword);
+    },
+    []
+  );
+
   const authed = firebaseEnabled ? !!user : demoLoggedIn;
 
   return {
@@ -81,6 +101,7 @@ export function useAuth() {
     login,
     logout,
     getToken,
+    changePassword,
     firebaseEnabled,
   };
 }

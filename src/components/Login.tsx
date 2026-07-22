@@ -228,26 +228,22 @@ export default function Login({
           >
             {busy ? "Memproses…" : "Masuk"}
           </HoverBox>
-          <div
-            style={{
-              marginTop: 22,
-              padding: "12px 14px",
-              background: "#F1F5F2",
-              borderRadius: 9,
-              fontSize: 12,
-              color: "#5E6B62",
-              lineHeight: 1.5,
-            }}
-          >
-            {firebaseEnabled ? (
-              <>Masuk dengan akun Firebase yang terdaftar di koleksi <b>users</b>.</>
-            ) : (
-              <>
-                Mode demo — cukup klik <b>Masuk</b>. Ganti peran (Admin / Petugas)
-                dari bilah atas setelah masuk.
-              </>
-            )}
-          </div>
+          {!firebaseEnabled && (
+            <div
+              style={{
+                marginTop: 22,
+                padding: "12px 14px",
+                background: "#F1F5F2",
+                borderRadius: 9,
+                fontSize: 12,
+                color: "#5E6B62",
+                lineHeight: 1.5,
+              }}
+            >
+              Mode demo — cukup klik <b>Masuk</b>. Ganti peran (Admin / Petugas)
+              dari bilah atas setelah masuk.
+            </div>
+          )}
           <Footer style={{ marginTop: 26 }} />
         </div>
       </div>
