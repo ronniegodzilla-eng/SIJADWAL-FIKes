@@ -55,7 +55,8 @@ export function useAppData(authed: boolean, viewPeriodeId?: string | null) {
   const [users] = useState<AppUser[]>(seedUsers);
 
   // Subscribe master data dari Firestore setelah login (mode Firebase).
-  // Koleksi kosong dibiarkan memakai seed agar app tak tampil hampa.
+  // Selalu terapkan snapshot apa adanya (termasuk kosong) — mode demo
+  // (Firebase nonaktif) yang memakai seed sebagai fallback tampilan awal.
   useEffect(() => {
     if (!firebaseEnabled || !db || !authed) return;
     const unsubs: (() => void)[] = [];
@@ -66,7 +67,7 @@ export function useAppData(authed: boolean, viewPeriodeId?: string | null) {
           collection(db!, name),
           (snap) => {
             const docs = snap.docs.map((d) => ({ id: d.id, ...d.data() })) as Doc[];
-            if (docs.length) apply(docs);
+            apply(docs);
           },
           (err) => console.error(`Firestore ${name}:`, err.message)
         );

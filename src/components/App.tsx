@@ -16,6 +16,7 @@ import RekapBeban from "./RekapBeban";
 import MasterData from "./MasterData";
 import Ekspor from "./Ekspor";
 import UsersPeriode from "./UsersPeriode";
+import { Footer } from "./Footer";
 
 type Screen = "grid" | "slot" | "rekap" | "master" | "ekspor" | "users";
 type ViewMode = "prodi" | "dosen" | "ruangan" | "kelas";
@@ -300,6 +301,7 @@ export default function App() {
               </svg>
             </HoverBox>
           </div>
+          <Footer variant="dark" style={{ marginTop: 12 }} />
         </div>
       </aside>
 

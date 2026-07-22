@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { HoverBox, TextInput } from "./primitives";
+import { Footer } from "./Footer";
 
 export default function Login({
   onSubmit,
@@ -85,24 +86,12 @@ export default function Login({
               fontSize: 46,
               lineHeight: 1.04,
               fontWeight: 800,
-              margin: "0 0 18px",
+              margin: 0,
               letterSpacing: "-.02em",
             }}
           >
             SIJADWAL<span style={{ color: "#F6C915" }}>·</span>FIKes
           </h1>
-          <p
-            style={{
-              fontSize: 15.5,
-              lineHeight: 1.6,
-              maxWidth: "30ch",
-              color: "#B9D3C0",
-              margin: 0,
-            }}
-          >
-            Susun jadwal kuliah tiga program studi dengan validasi bentrok
-            real-time lintas prodi — dosen, ruangan, dan kelas.
-          </p>
         </div>
         <div style={{ display: "flex", gap: 26, fontSize: 12.5, color: "#9EC1A8" }}>
           <div>
@@ -202,6 +191,7 @@ export default function Login({
               </>
             )}
           </div>
+          <Footer style={{ marginTop: 26 }} />
         </div>
       </div>
     </div>
