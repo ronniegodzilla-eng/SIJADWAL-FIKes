@@ -55,43 +55,116 @@ export default function Login({
           color: "#EAF4EC",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <Image src="/logo-uis.png" alt="UIS" width={46} height={46} style={{ objectFit: "contain" }} />
-          <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: ".04em" }}>
-            UNIVERSITAS IBNU SINA
-          </div>
-        </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        {/* Motif grid dekoratif — bertema grid jadwal */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: "none",
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px)",
+            backgroundSize: "52px 52px",
+          }}
+        />
+        {/* Blok jadwal semu — warna senada legenda prodi di grid asli */}
+        <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
+          {/* Atas — di luar pita judul agar tak tumpang tindih */}
           <div
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              padding: "6px 13px",
-              borderRadius: 999,
-              background: "rgba(246,201,21,.16)",
-              border: "1px solid rgba(246,201,21,.4)",
-              color: "#F6D64A",
-              fontSize: 12,
-              fontWeight: 700,
-              letterSpacing: ".04em",
-              marginBottom: 22,
-              alignSelf: "flex-start",
+              position: "absolute",
+              top: "15%",
+              right: "9%",
+              width: 138,
+              height: 64,
+              borderRadius: 10,
+              background: "rgba(14,159,110,.08)",
+              borderLeft: "3px solid rgba(14,159,110,.3)",
+              transform: "rotate(-6deg)",
             }}
-          >
-            SISTEM PENJADWALAN KULIAH
-          </div>
-          <h1
+          />
+          <div
             style={{
-              fontSize: 46,
-              lineHeight: 1.04,
-              fontWeight: 800,
-              margin: 0,
-              letterSpacing: "-.02em",
+              position: "absolute",
+              top: "30%",
+              left: "7%",
+              width: 118,
+              height: 54,
+              borderRadius: 10,
+              background: "rgba(42,111,214,.075)",
+              borderLeft: "3px solid rgba(42,111,214,.28)",
+              transform: "rotate(5deg)",
             }}
-          >
-            SIJADWAL<span style={{ color: "#F6C915" }}>·</span>FIKes
-          </h1>
+          />
+          {/* Bawah — mengisi ruang yang dulu dipakai statistik */}
+          <div
+            style={{
+              position: "absolute",
+              top: "66%",
+              right: "12%",
+              width: 148,
+              height: 60,
+              borderRadius: 10,
+              background: "rgba(138,63,184,.07)",
+              borderLeft: "3px solid rgba(138,63,184,.26)",
+              transform: "rotate(4deg)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "80%",
+              left: "10%",
+              width: 108,
+              height: 50,
+              borderRadius: 10,
+              background: "rgba(14,159,110,.065)",
+              borderLeft: "3px solid rgba(14,159,110,.25)",
+              transform: "rotate(-3deg)",
+            }}
+          />
+        </div>
+
+        <div style={{ position: "relative", zIndex: 1, flex: 1, display: "flex", flexDirection: "column" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <Image src="/logo-uis.png" alt="UIS" width={46} height={46} style={{ objectFit: "contain" }} />
+            <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: ".04em" }}>
+              UNIVERSITAS IBNU SINA
+            </div>
+          </div>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "6px 13px",
+                borderRadius: 999,
+                background: "rgba(246,201,21,.16)",
+                border: "1px solid rgba(246,201,21,.4)",
+                color: "#F6D64A",
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: ".04em",
+                marginBottom: 22,
+                alignSelf: "flex-start",
+              }}
+            >
+              SISTEM PENJADWALAN KULIAH
+            </div>
+            <h1
+              style={{
+                fontSize: 46,
+                lineHeight: 1.04,
+                fontWeight: 800,
+                margin: 0,
+                letterSpacing: "-.02em",
+              }}
+            >
+              SIJADWAL<span style={{ color: "#F6C915" }}>·</span>FIKes
+            </h1>
+          </div>
         </div>
       </div>
 
